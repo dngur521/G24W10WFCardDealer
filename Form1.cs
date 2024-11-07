@@ -19,7 +19,17 @@ namespace G24W10WFCardDealer
             string suit = suits[card / values.Length];
             string value = values[card % values.Length];
 
-            Card1.Image = Properties.Resources.ResourceManager.GetObject($"{value}_of_{suit}") as Image;
+            //if (value == "jack" || value == "queen" || value == "king") {
+            //    suit += "2";
+            //}
+            if (value is "jack" or "queen" or "king") {
+                suit += "2";
+            }
+
+            Card1.Image = Properties.Resources
+                        .ResourceManager
+                        .GetObject($"{value}_of_{suit}") 
+                        as Image;
         }
     }
 }
