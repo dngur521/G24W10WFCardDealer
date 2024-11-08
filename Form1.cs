@@ -92,7 +92,6 @@ namespace G24W10WFCardDealer
 
             var comparer = new CardComparer(customOrder);
             var cardSet = new SortedSet<string>(comparer);
-            
 
             // 중복 없이 카드 만들기
             while (cardSet.Count < CardCount)
@@ -107,7 +106,6 @@ namespace G24W10WFCardDealer
             }
 
             string[] cardList = [.. cardSet];
-
 
             // 각 string에 맞는 이미지 지정
             int index = 0;
@@ -166,9 +164,9 @@ namespace G24W10WFCardDealer
                     valueCounts[value] = 1;
             }
 
-            int pairs = 0;
+            int pairs   = 0;
             int triples = 0;
-            int quads = 0;
+            int quads   = 0;
 
             foreach (var count in valueCounts.Values) {
                 if (count == 2) {
@@ -176,10 +174,8 @@ namespace G24W10WFCardDealer
                     if (count == 4)
                         pairs++; 
                 }
-                    
                 else if (count == 3)
                     triples++;
-
                 else if (count == 4)
                     quads++;
             }
@@ -204,63 +200,62 @@ namespace G24W10WFCardDealer
                      cardsvalue[3] == "king"  && 
                      cardsvalue[4] == "ace")
                 label1.Text = "마운틴";
-            else if (cardsvalue[0] == "9"   && 
-                cardsvalue[1] == "10"   && 
-                cardsvalue[2] == "jack"  && 
-                cardsvalue[3] == "queen" && 
-                cardsvalue[4] == "king")
+            else if (cardsvalue[0] == "9"     && 
+                     cardsvalue[1] == "10"    && 
+                     cardsvalue[2] == "jack"  && 
+                     cardsvalue[3] == "queen" && 
+                     cardsvalue[4] == "king")
                 label1.Text = "스트레이트";
-            else if (cardsvalue[0] == "8"   && 
-                cardsvalue[1] == "9"    && 
-                cardsvalue[2] == "10"    && 
-                cardsvalue[3] == "jack"  && 
-                cardsvalue[4] == "queen")
+            else if (cardsvalue[0] == "8"     && 
+                     cardsvalue[1] == "9"     && 
+                     cardsvalue[2] == "10"    && 
+                     cardsvalue[3] == "jack"  && 
+                     cardsvalue[4] == "queen")
                 label1.Text = "스트레이트";
-            else if (cardsvalue[0] == "7"   && 
-                cardsvalue[1] == "8"    && 
-                cardsvalue[2] == "9"     && 
-                cardsvalue[3] == "10"    && 
-                cardsvalue[4] == "jack")
+            else if (cardsvalue[0] == "7"     && 
+                     cardsvalue[1] == "8"     && 
+                     cardsvalue[2] == "9"     && 
+                     cardsvalue[3] == "10"    && 
+                     cardsvalue[4] == "jack")
                 label1.Text = "스트레이트";
-            else if (cardsvalue[0] == "6"   && 
-                cardsvalue[1] == "7"    && 
-                cardsvalue[2] == "8"     && 
-                cardsvalue[3] == "9"     && 
-                cardsvalue[4] == "10")
+            else if (cardsvalue[0] == "6"     && 
+                     cardsvalue[1] == "7"     && 
+                     cardsvalue[2] == "8"     && 
+                     cardsvalue[3] == "9"     && 
+                     cardsvalue[4] == "10")
                 label1.Text = "스트레이트";
-            else if (cardsvalue[0] == "5"   && 
-                cardsvalue[1] == "6"    && 
-                cardsvalue[2] == "7"     && 
-                cardsvalue[3] == "8"     && 
-                cardsvalue[4] == "9")
+            else if (cardsvalue[0] == "5"     && 
+                     cardsvalue[1] == "6"     && 
+                     cardsvalue[2] == "7"     && 
+                     cardsvalue[3] == "8"     && 
+                     cardsvalue[4] == "9")
                 label1.Text = "스트레이트";
-            else if (cardsvalue[0] == "4"   && 
-                cardsvalue[1] == "5"    && 
-                cardsvalue[2] == "6"     && 
-                cardsvalue[3] == "7"     && 
-                cardsvalue[4] == "8")
+            else if (cardsvalue[0] == "4"     && 
+                     cardsvalue[1] == "5"     && 
+                     cardsvalue[2] == "6"     && 
+                     cardsvalue[3] == "7"     && 
+                     cardsvalue[4] == "8")
                 label1.Text = "스트레이트";
-            else if (cardsvalue[0] == "3"   && 
-                cardsvalue[1] == "4"    && 
-                cardsvalue[2] == "5"     && 
-                cardsvalue[3] == "6"     && 
-                cardsvalue[4] == "7")
+            else if (cardsvalue[0] == "3"     && 
+                     cardsvalue[1] == "4"     && 
+                     cardsvalue[2] == "5"     && 
+                     cardsvalue[3] == "6"     && 
+                     cardsvalue[4] == "7")
                 label1.Text = "스트레이트";
-            else if (cardsvalue[0] == "2"   && 
-                cardsvalue[1] == "3"    && 
-                cardsvalue[2] == "4"     && 
-                cardsvalue[3] == "5"     && 
-                cardsvalue[4] == "6")
+            else if (cardsvalue[0] == "2"     && 
+                     cardsvalue[1] == "3"     && 
+                     cardsvalue[2] == "4"     && 
+                     cardsvalue[3] == "5"     && 
+                     cardsvalue[4] == "6")
                 label1.Text = "스트레이트";
-            else if (cardsvalue[0] == "ace" && 
-                cardsvalue[1] == "2"    && 
-                cardsvalue[2] == "3"     && 
-                cardsvalue[3] == "4"     && 
-                cardsvalue[4] == "5")
+            else if (cardsvalue[0] == "ace"   && 
+                     cardsvalue[1] == "2"     && 
+                     cardsvalue[2] == "3"     && 
+                     cardsvalue[3] == "4"     && 
+                     cardsvalue[4] == "5")
                 label1.Text = "백스트레이트";
             else
                 label1.Text = "기타";
-
             if (label1.Text == "스트레이트")
                 straight = true;
             else if (label1.Text == "마운틴")
