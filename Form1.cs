@@ -3,34 +3,11 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace G24W10WFCardDealer
 {
-    // ChatGPT Âü°íÇØ¼­ ¸¸µç Class
-    public class CardComparer : IComparer<string>
-    {
-        private readonly Dictionary<string, int> _cardOrder;
-
-        public CardComparer(IEnumerable<string> customOrder)
-        {
-            // Ä«µå °ªÀ» ¼ø¼­´ë·Î ¸ÅÇÎ
-            _cardOrder = [];
-            int index  = 0;
-            foreach (var card in customOrder)
-            {
-                _cardOrder[card] = index++;
-            }
-        }
-
-        public int Compare(string x, string y)
-        {
-            // °¢ Ä«µå °ªÀ» ¼ø¼­¿¡ µû¶ó ºñ±³
-            return _cardOrder[x].CompareTo(_cardOrder[y]);
-        }
-    }
-
     public partial class Form1 : Form
     {
         private const int CardCount = 5;
 
-        // ¹è¿­¿¡ ¾²ÀÏ »ó¼ö
+        // ë°°ì—´ì— ì“°ì¼ ìƒìˆ˜
         private const int value = 0;
         private const int suit = 1;
 
@@ -39,10 +16,10 @@ namespace G24W10WFCardDealer
             InitializeComponent();
         }
 
-        // ·£´ıÇÑ Value °ª »Ì¾Æ³»´Â ÇÔ¼ö
+        // ëœë¤í•œ Value ê°’ ë½‘ì•„ë‚´ëŠ” í•¨ìˆ˜
         public static string GenerateValue()
         {
-            string[] values = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", 
+            string[] values = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10",
                                "jack", "queen", "king"];
 
             Random random = new();
@@ -51,7 +28,7 @@ namespace G24W10WFCardDealer
             return values[index];
         }
 
-        // ·£´ıÇÑ Suit °ª »Ì¾Æ³»´Â ÇÔ¼ö
+        // ëœë¤í•œ Suit ê°’ ë½‘ì•„ë‚´ëŠ” í•¨ìˆ˜
         public static string GenerateSuit()
         {
             string[] suits = ["spades", "diamonds", "hearts", "clubs"];
@@ -62,7 +39,7 @@ namespace G24W10WFCardDealer
             return suits[index];
         }
 
-        // ¹¹¹¹¹¹_of_¹¹¹¹¹¹¸¦ "_of_"¸¦ Áß½ÉÀ¸·Î ³»¿ë¸¸ »Ì¾Æ³»´Â ÇÔ¼ö
+        // ë­ë­ë­_of_ë­ë­ë­ë¥¼ "_of_"ë¥¼ ì¤‘ì‹¬ìœ¼ë¡œ ë‚´ìš©ë§Œ ë½‘ì•„ë‚´ëŠ” í•¨ìˆ˜
         public static string[] GetSplit(string[] cardList, int index)
         {
             string[] temp = cardList[index].Split(new string[] { "_of_" }, StringSplitOptions.None);
@@ -74,8 +51,8 @@ namespace G24W10WFCardDealer
         private void OnDeal(object sender, EventArgs e)
         {
 
-            // Á¤·Ä ¼ø¼­ Á¤ÇØÁÖ±â
-            var customOrder = new List<string> { 
+            // ì •ë ¬ ìˆœì„œ ì •í•´ì£¼ê¸°
+            var customOrder = new List<string> {
                     "ace_of_spades",    "ace_of_diamonds",    "ace_of_hearts",    "ace_of_clubs",
                     "2_of_spades",      "2_of_diamonds",      "2_of_hearts",      "2_of_clubs",
                     "3_of_spades",      "3_of_diamonds",      "3_of_hearts",      "3_of_clubs",
@@ -93,11 +70,11 @@ namespace G24W10WFCardDealer
             var comparer = new CardComparer(customOrder);
             var cardSet = new SortedSet<string>(comparer);
 
-            // Áßº¹ ¾øÀÌ Ä«µå ¸¸µé±â
+            // ì¤‘ë³µ ì—†ì´ ì¹´ë“œ ë§Œë“¤ê¸°
             while (cardSet.Count < CardCount)
             {
                 string value = GenerateValue();
-                string suit  = GenerateSuit();
+                string suit = GenerateSuit();
 
                 if (value is "jack" or "queen" or "king")
                     suit += "2";
@@ -107,7 +84,7 @@ namespace G24W10WFCardDealer
 
             string[] cardList = [.. cardSet];
 
-            // °¢ string¿¡ ¸Â´Â ÀÌ¹ÌÁö ÁöÁ¤
+            // ê° stringì— ë§ëŠ” ì´ë¯¸ì§€ ì§€ì •
             int index = 0;
 
             Card1.Image = Properties.Resources.ResourceManager.
@@ -131,29 +108,29 @@ namespace G24W10WFCardDealer
             string[] card5arr = GetSplit(cardList, index);
 
 
-            // Á·º¸ ¾Ë¾Æ³»±â À§ÇÑ ÁØºñÀÛ¾÷
+            // ì¡±ë³´ ì•Œì•„ë‚´ê¸° ìœ„í•œ ì¤€ë¹„ì‘ì—…
             string[][] cardsarr = [card1arr, card2arr, card3arr, card4arr, card5arr];
 
-            string[] cardsvalue = [cardsarr[0][value], 
-                                   cardsarr[1][value], 
+            string[] cardsvalue = [cardsarr[0][value],
+                                   cardsarr[1][value],
                                    cardsarr[2][value],
                                    cardsarr[3][value],
                                    cardsarr[4][value]];
 
-            string[] cardssuit  = [cardsarr[0][suit],
+            string[] cardssuit = [cardsarr[0][suit],
                                    cardsarr[1][suit],
                                    cardsarr[2][suit],
                                    cardsarr[3][suit],
                                    cardsarr[4][suit]];
 
-            // Å×½ºÆ®¿ë °ª
+            // í…ŒìŠ¤íŠ¸ìš© ê°’
             //cardsvalue = ["10", "jack", "queen", "king", "ace"];
             //cardsvalue = ["ace", "2", "3", "4", "5"];
             //cardsvalue = ["ace", "2", "3", "4", "5"];
             //cardsvalue = ["7", "7", "3", "7", "7"];
             //cardsvalue = ["7", "7", "3", "7", "3"];
 
-            // ÀÌ ¾Æ·¡ºÎÅÍ Á·º¸ ¾Ë¾Æ³»´Â ÄÚµåµé
+            // ì´ ì•„ë˜ë¶€í„° ì¡±ë³´ ì•Œì•„ë‚´ëŠ” ì½”ë“œë“¤
             Dictionary<string, int> valueCounts = [];
 
             foreach (var value in cardsvalue)
@@ -164,15 +141,17 @@ namespace G24W10WFCardDealer
                     valueCounts[value] = 1;
             }
 
-            int pairs   = 0;
+            int pairs = 0;
             int triples = 0;
-            int quads   = 0;
+            int quads = 0;
 
-            foreach (var count in valueCounts.Values) {
-                if (count == 2) {
+            foreach (var count in valueCounts.Values)
+            {
+                if (count == 2)
+                {
                     pairs++;
                     if (count == 4)
-                        pairs++; 
+                        pairs++;
                 }
                 else if (count == 3)
                     triples++;
@@ -180,111 +159,136 @@ namespace G24W10WFCardDealer
                     quads++;
             }
 
-            bool straight      = false;
-            bool backstraight  = false;
+            bool straight = false;
+            bool backstraight = false;
             bool royalstraight = false;
 
             if (pairs == 1 && triples == 0)
-                label1.Text = "¿øÆä¾î";
+                label1.Text = "ì›í˜ì–´";
             else if (pairs == 2)
-                label1.Text = "ÅõÆä¾î";
+                label1.Text = "íˆ¬í˜ì–´";
             else if (triples == 1 && pairs == 0)
-                label1.Text = "Æ®¸®ÇÃ";
+                label1.Text = "íŠ¸ë¦¬í”Œ";
             else if (triples == 1 && pairs == 1)
-                label1.Text = "Ç®ÇÏ¿ì½º";
+                label1.Text = "í’€í•˜ìš°ìŠ¤";
             else if (quads == 1)
-                label1.Text = "Æ÷Ä«µå";
-            else if (cardsvalue[0] == "10"    && 
-                     cardsvalue[1] == "jack"  && 
-                     cardsvalue[2] == "queen" && 
-                     cardsvalue[3] == "king"  && 
-                     cardsvalue[4] == "ace")
-                label1.Text = "¸¶¿îÆ¾";
-            else if (cardsvalue[0] == "9"     && 
-                     cardsvalue[1] == "10"    && 
-                     cardsvalue[2] == "jack"  && 
-                     cardsvalue[3] == "queen" && 
+                label1.Text = "í¬ì¹´ë“œ";
+            else if (cardsvalue[0] == "ace" &&
+                     cardsvalue[1] == "10" &&
+                     cardsvalue[2] == "jack" &&
+                     cardsvalue[3] == "queen" &&
                      cardsvalue[4] == "king")
-                label1.Text = "½ºÆ®·¹ÀÌÆ®";
-            else if (cardsvalue[0] == "8"     && 
-                     cardsvalue[1] == "9"     && 
-                     cardsvalue[2] == "10"    && 
-                     cardsvalue[3] == "jack"  && 
+                label1.Text = "ë§ˆìš´í‹´";
+            else if (cardsvalue[0] == "9" &&
+                     cardsvalue[1] == "10" &&
+                     cardsvalue[2] == "jack" &&
+                     cardsvalue[3] == "queen" &&
+                     cardsvalue[4] == "king")
+                label1.Text = "ìŠ¤íŠ¸ë ˆì´íŠ¸";
+            else if (cardsvalue[0] == "8" &&
+                     cardsvalue[1] == "9" &&
+                     cardsvalue[2] == "10" &&
+                     cardsvalue[3] == "jack" &&
                      cardsvalue[4] == "queen")
-                label1.Text = "½ºÆ®·¹ÀÌÆ®";
-            else if (cardsvalue[0] == "7"     && 
-                     cardsvalue[1] == "8"     && 
-                     cardsvalue[2] == "9"     && 
-                     cardsvalue[3] == "10"    && 
+                label1.Text = "ìŠ¤íŠ¸ë ˆì´íŠ¸";
+            else if (cardsvalue[0] == "7" &&
+                     cardsvalue[1] == "8" &&
+                     cardsvalue[2] == "9" &&
+                     cardsvalue[3] == "10" &&
                      cardsvalue[4] == "jack")
-                label1.Text = "½ºÆ®·¹ÀÌÆ®";
-            else if (cardsvalue[0] == "6"     && 
-                     cardsvalue[1] == "7"     && 
-                     cardsvalue[2] == "8"     && 
-                     cardsvalue[3] == "9"     && 
+                label1.Text = "ìŠ¤íŠ¸ë ˆì´íŠ¸";
+            else if (cardsvalue[0] == "6" &&
+                     cardsvalue[1] == "7" &&
+                     cardsvalue[2] == "8" &&
+                     cardsvalue[3] == "9" &&
                      cardsvalue[4] == "10")
-                label1.Text = "½ºÆ®·¹ÀÌÆ®";
-            else if (cardsvalue[0] == "5"     && 
-                     cardsvalue[1] == "6"     && 
-                     cardsvalue[2] == "7"     && 
-                     cardsvalue[3] == "8"     && 
+                label1.Text = "ìŠ¤íŠ¸ë ˆì´íŠ¸";
+            else if (cardsvalue[0] == "5" &&
+                     cardsvalue[1] == "6" &&
+                     cardsvalue[2] == "7" &&
+                     cardsvalue[3] == "8" &&
                      cardsvalue[4] == "9")
-                label1.Text = "½ºÆ®·¹ÀÌÆ®";
-            else if (cardsvalue[0] == "4"     && 
-                     cardsvalue[1] == "5"     && 
-                     cardsvalue[2] == "6"     && 
-                     cardsvalue[3] == "7"     && 
+                label1.Text = "ìŠ¤íŠ¸ë ˆì´íŠ¸";
+            else if (cardsvalue[0] == "4" &&
+                     cardsvalue[1] == "5" &&
+                     cardsvalue[2] == "6" &&
+                     cardsvalue[3] == "7" &&
                      cardsvalue[4] == "8")
-                label1.Text = "½ºÆ®·¹ÀÌÆ®";
-            else if (cardsvalue[0] == "3"     && 
-                     cardsvalue[1] == "4"     && 
-                     cardsvalue[2] == "5"     && 
-                     cardsvalue[3] == "6"     && 
+                label1.Text = "ìŠ¤íŠ¸ë ˆì´íŠ¸";
+            else if (cardsvalue[0] == "3" &&
+                     cardsvalue[1] == "4" &&
+                     cardsvalue[2] == "5" &&
+                     cardsvalue[3] == "6" &&
                      cardsvalue[4] == "7")
-                label1.Text = "½ºÆ®·¹ÀÌÆ®";
-            else if (cardsvalue[0] == "2"     && 
-                     cardsvalue[1] == "3"     && 
-                     cardsvalue[2] == "4"     && 
-                     cardsvalue[3] == "5"     && 
+                label1.Text = "ìŠ¤íŠ¸ë ˆì´íŠ¸";
+            else if (cardsvalue[0] == "2" &&
+                     cardsvalue[1] == "3" &&
+                     cardsvalue[2] == "4" &&
+                     cardsvalue[3] == "5" &&
                      cardsvalue[4] == "6")
-                label1.Text = "½ºÆ®·¹ÀÌÆ®";
-            else if (cardsvalue[0] == "ace"   && 
-                     cardsvalue[1] == "2"     && 
-                     cardsvalue[2] == "3"     && 
-                     cardsvalue[3] == "4"     && 
+                label1.Text = "ìŠ¤íŠ¸ë ˆì´íŠ¸";
+            else if (cardsvalue[0] == "ace" &&
+                     cardsvalue[1] == "2" &&
+                     cardsvalue[2] == "3" &&
+                     cardsvalue[3] == "4" &&
                      cardsvalue[4] == "5")
-                label1.Text = "¹é½ºÆ®·¹ÀÌÆ®";
+                label1.Text = "ë°±ìŠ¤íŠ¸ë ˆì´íŠ¸";
             else
-                label1.Text = "±âÅ¸";
-            if (label1.Text == "½ºÆ®·¹ÀÌÆ®")
+                label1.Text = "ê¸°íƒ€";
+            if (label1.Text == "ìŠ¤íŠ¸ë ˆì´íŠ¸")
                 straight = true;
-            else if (label1.Text == "¸¶¿îÆ¾")
+            else if (label1.Text == "ë§ˆìš´í‹´")
                 royalstraight = true;
-            else if (label1.Text == "¹é½ºÆ®·¹ÀÌÆ®")
-                backstraight  = true;
+            else if (label1.Text == "ë°±ìŠ¤íŠ¸ë ˆì´íŠ¸")
+                backstraight = true;
 
-            //Å×½ºÆ®¿ë °ª
+            //í…ŒìŠ¤íŠ¸ìš© ê°’
             //cardssuit = ["a", "a", "a", "a", "a"];
 
-            if ((cardssuit[0] == cardssuit[1]) && 
-                (cardssuit[1] == cardssuit[2]) && 
-                (cardssuit[2] == cardssuit[3]) && 
-                (cardssuit[3] == cardssuit[4]) && 
+            if ((cardssuit[0] == cardssuit[1]) &&
+                (cardssuit[1] == cardssuit[2]) &&
+                (cardssuit[2] == cardssuit[3]) &&
+                (cardssuit[3] == cardssuit[4]) &&
                 (cardssuit[4] == cardssuit[0]))
             {
                 if (straight == true)
-                    label1.Text = "½ºÆ®·¹ÀÌÆ® ÇÃ·¯½¬";
+                    label1.Text = "ìŠ¤íŠ¸ë ˆì´íŠ¸ í”ŒëŸ¬ì‰¬";
                 else if (royalstraight == true)
-                    label1.Text = "·Î¾â½ºÆ®·¹ÀÌÆ® ÇÃ·¯½¬";
-                else if (backstraight  == true)
-                    label1.Text = "¹é½ºÆ®·¹ÀÌÆ® ÇÃ·¯½¬";
+                    label1.Text = "ë¡œì–„ìŠ¤íŠ¸ë ˆì´íŠ¸ í”ŒëŸ¬ì‰¬";
+                else if (backstraight == true)
+                    label1.Text = "ë°±ìŠ¤íŠ¸ë ˆì´íŠ¸ í”ŒëŸ¬ì‰¬";
                 else
-                    label1.Text = "ÇÃ·¯½¬";
+                    label1.Text = "í”ŒëŸ¬ì‰¬";
             }
 
-            // splitµÈ string Àß ÀúÀåµÇ¾ú³ª È®ÀÎÇÏ´Â ÄÚµå
+            // splitëœ string ì˜ ì €ì¥ë˜ì—ˆë‚˜ í™•ì¸í•˜ëŠ” ì½”ë“œ
             label3.Text = $"{cardsvalue[0]}, {cardsvalue[1]}, {cardsvalue[2]}, {cardsvalue[3]}, {cardsvalue[4]}";
-            label4.Text = $"{cardssuit[0]},  {cardssuit[1]},  {cardssuit[2]},  {cardssuit[3]},  {cardssuit[4]}"; 
+            label4.Text = $"{cardssuit[0]},  {cardssuit[1]},  {cardssuit[2]},  {cardssuit[3]},  {cardssuit[4]}";
+
+        }
+
+        // ChatGPT ì°¸ê³ í•´ì„œ ë§Œë“  Class
+        public class CardComparer : IComparer<string>
+        {
+            private readonly Dictionary<string, int> _cardOrder;
+
+            public CardComparer(IEnumerable<string> customOrder)
+            {
+                // ì¹´ë“œ ê°’ì„ ìˆœì„œëŒ€ë¡œ ë§¤í•‘
+                _cardOrder = [];
+                int index = 0;
+                foreach (var card in customOrder)
+                {
+                    _cardOrder[card] = index++;
+                }
+            }
+
+            public int Compare(string x, string y)
+            {
+                // ê° ì¹´ë“œ ê°’ì„ ìˆœì„œì— ë”°ë¼ ë¹„êµ
+                return _cardOrder[x].CompareTo(_cardOrder[y]);
+            }
+
         }
     }
 }
